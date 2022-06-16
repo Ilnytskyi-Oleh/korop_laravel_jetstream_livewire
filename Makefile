@@ -1,5 +1,5 @@
 dir=${CURDIR}
-export COMPOSE_PROJECT_NAME=environment3
+export COMPOSE_PROJECT_NAME=livewire_jetstream
 
 ifndef APP_ENV
 	# Determine if .env file exist
