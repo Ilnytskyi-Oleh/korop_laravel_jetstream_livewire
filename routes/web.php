@@ -20,6 +20,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth', 'verified']], function(){
 
     Route::group(['middleware' => ['registration_completed']], function(){
+
         //All routs are here
         Route::get('/dashboard', function () {
             return view('dashboard');
