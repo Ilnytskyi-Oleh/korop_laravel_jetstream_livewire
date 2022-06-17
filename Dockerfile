@@ -35,15 +35,22 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
       cron \
       sudo \
       libzip-dev \
+      libpng-dev \
+      libfreetype6-dev \
+      libjpeg62-turbo-dev \
     && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
     && docker-php-ext-configure intl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
       pdo_mysql \
       sockets \
       intl \
       opcache \
       zip \
-    && rm -rf /tmp/* \
+      -j$(nproc) gd \
+      exif \
+    && docker-php-ext-enable \
+      exif \
     && rm -rf /var/list/apt/* \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean

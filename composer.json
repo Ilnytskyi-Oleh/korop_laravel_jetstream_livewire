@@ -34,7 +34,8 @@
 		"laravel/jetstream": "^2.8",
 		"laravel/sanctum": "^2.14",
 		"laravel/tinker": "^2.7",
-		"livewire/livewire": "^2.5"
+		"livewire/livewire": "^2.5",
+		"spatie/laravel-medialibrary": "^10.0.0"
 	},
 	"require-dev": {
 		"bamarni/composer-bin-plugin": "^1.5",

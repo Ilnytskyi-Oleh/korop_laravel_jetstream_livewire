@@ -25,6 +25,9 @@
                                     <thead class="border-b font-bold ">
                                     <tr>
                                         <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
+                                            Photo
+                                        </th>
+                                        <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
                                             Title
                                         </th>
                                         <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
@@ -41,7 +44,10 @@
                                     <tbody>
                                     @foreach($listings as $listing)
                                         <tr class="border-b">
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                <img src="{{$listing->getFirstMediaUrl('listings', 'thumb')}}" alt="">
 
+                                            </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {{$listing->title}}
                                             </td>
