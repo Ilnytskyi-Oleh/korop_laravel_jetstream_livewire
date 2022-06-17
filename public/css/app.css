@@ -1131,8 +1131,17 @@ select {
 .mb-4 {
   margin-bottom: 1rem;
 }
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.ml-auto {
+  margin-left: auto;
+}
 .-mt-px {
   margin-top: -1px;
+}
+.ml-5 {
+  margin-left: 1.25rem;
 }
 .block {
   display: block;
@@ -1384,6 +1393,9 @@ select {
 }
 .rounded-full {
   border-radius: 9999px;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
 }
 .rounded-l-md {
   border-top-left-radius: 0.375rem;
@@ -1648,6 +1660,9 @@ select {
 }
 .font-semibold {
   font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
 }
 .font-light {
   font-weight: 300;

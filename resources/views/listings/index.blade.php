@@ -7,24 +7,33 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="mb-2 flex">
+                <a href="{{route('listings.create')}}" class="ml-auto">
+                    <x-jet-button class="mt-2 mr-2 " type="button" >
+                        {{ __('Add a listing') }}
+                    </x-jet-button>
+                </a>
+
+            </div>
+
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="overflow-hidden">
                                 <table class="min-w-full">
-                                    <thead class="border-b">
+                                    <thead class="border-b font-bold ">
                                     <tr>
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
                                             Title
                                         </th>
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
                                             Description
                                         </th>
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
                                             Price
                                         </th>
-                                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                        <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
                                             Actions
                                         </th>
                                     </tr>
@@ -37,7 +46,7 @@
                                                 {{$listing->title}}
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                                {{$listing->description}}
+                                                {{Str::words($listing->description, 5)}}
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 ${{$listing->price}}
