@@ -52,13 +52,16 @@
                                                 ${{$listing->price}}
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap flex flex-row gap-x-4">
-
-                                                <a href="{{route('listings.edit', $listing)}}">Edit</a>
-                                                <form action="{{ route('listings.destroy', $listing) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input type="submit" onclick="return confirm('Точно?!');" class="cursor-pointer text-red-500" value="Delete">
-                                                </form>
+                                                @can('update', $listing)
+                                                    <a href="{{route('listings.edit', $listing)}}">Edit</a>
+                                                @endcan
+                                                @can('delete', $listing)
+                                                    <form action="{{ route('listings.destroy', $listing) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <input type="submit" onclick="return confirm('Точно?!');" class="cursor-pointer text-red-500" value="Delete">
+                                                    </form>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach
