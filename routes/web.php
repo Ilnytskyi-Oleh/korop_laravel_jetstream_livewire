@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard');
+
+        Route::resource('listings', \App\Http\Controllers\ListingController::class);
     });
 
     Route::get('register-step2',[\App\Http\Controllers\RegisterStepTwoController::class, 'create'])
@@ -32,5 +34,5 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::post('register-step2',[\App\Http\Controllers\RegisterStepTwoController::class, 'store'])
     ->name('register-step-two.store');
 
-    Route::resource('listings', \App\Http\Controllers\ListingController::class);
+
 });

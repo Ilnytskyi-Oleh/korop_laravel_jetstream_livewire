@@ -38,7 +38,7 @@ class ListingController extends Controller
      */
     public function store(StoreListingRequest $request)
     {
-        Listing::create($request->all());
+        Listing::create($request->validated());
 
         return redirect()->route('listings.index');
     }
@@ -58,11 +58,11 @@ class ListingController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Listing  $listing
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Listing $listing)
     {
-        //
+        return view('listings.edit', compact('listing'));
     }
 
     /**
@@ -70,21 +70,24 @@ class ListingController extends Controller
      *
      * @param  \App\Http\Requests\UpdateListingRequest  $request
      * @param  \App\Models\Listing  $listing
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateListingRequest $request, Listing $listing)
     {
-        //
+        $listing->update($request->validated());
+        return redirect()->route('listings.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Listing  $listing
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Listing $listing)
     {
-        //
+        $listing->delete();
+
+        return redirect()->route('listings.index');
     }
 }

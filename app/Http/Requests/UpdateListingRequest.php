@@ -13,7 +13,7 @@ class UpdateListingRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateListingRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required',
+            'price' => 'required|numeric',
+            'description' => 'required',
         ];
     }
 }
