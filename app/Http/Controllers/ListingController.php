@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Color;
 use App\Models\Listing;
 use App\Models\Size;
@@ -19,9 +20,45 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::with('categories')->get();
 
-        return view('listings.index', compact('listings'));
+        $listings = Listing::with(['categories', 'sizes', 'colors', 'user.city'])
+            ->when(request('title'), function ($query){
+                $query->where('title', 'LIKE', '%'.request('title').'%');
+            })
+            ->when(request('category'), function ($query){
+                $query->whereHas('categories', function ($q2){
+                    $q2->where('id', request('category'));
+                });
+            })
+            ->when(request('size'), function ($query){
+                $query->whereHas('sizes', function ($q2){
+                    $q2->where('id', request('size'));
+                });
+            })
+            ->when(request('color'), function ($query){
+                $query->whereHas('colors', function ($q2){
+                    $q2->where('id', request('color'));
+                });
+            })
+            ->when(request('city'), function ($query){
+                $query->whereHas('user.city', function ($q2){
+                    $q2->where('id', request('city'));
+                });
+            })
+            ->when(request('saved'), function ($query){
+                $query->whereHas('savedUsers', function ($q2){
+                    $q2->where('id', auth()->id());
+                });
+            })
+            ->paginate(3)->withQueryString();
+
+
+        $categories = Category::lazy();
+        $sizes = Size::lazy();
+        $colors = Color::lazy();
+        $cities = City::orderBy('name')->lazy();
+
+        return view('listings.index', compact('listings', 'categories', 'sizes', 'colors', 'cities'));
     }
 
     /**

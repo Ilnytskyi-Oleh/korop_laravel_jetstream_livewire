@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'address',
+        'city_id',
     ];
 
     /**
@@ -65,4 +66,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Listing::class);
     }
+
+    public function savedListings()
+    {
+        return $this->belongsToMany(Listing::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+
 }
