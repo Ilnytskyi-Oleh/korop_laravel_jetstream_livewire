@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreListingRequest;
 use App\Http\Requests\UpdateListingRequest;
+use App\Models\Category;
+use App\Models\Color;
 use App\Models\Listing;
+use App\Models\Size;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ListingController extends Controller
 {
@@ -15,7 +19,7 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $listings = Listing::all();
+        $listings = Listing::with('categories')->get();
 
         return view('listings.index', compact('listings'));
     }
@@ -27,7 +31,11 @@ class ListingController extends Controller
      */
     public function create()
     {
-        return view('listings.create');
+        $categories = Category::lazy();
+        $colors = Color::lazy();
+        $sizes = Size::lazy();
+
+        return view('listings.create', compact('categories', 'colors', 'sizes'));
     }
 
     /**
@@ -45,6 +53,10 @@ class ListingController extends Controller
                 $listing->addMediaFromRequest('photo'.$i)->toMediaCollection('listings');
             }
         }
+
+        $listing->categories()->attach($request->categories);
+        $listing->colors()->attach($request->colors);
+        $listing->sizes()->attach($request->sizes);
 
         return redirect()->route('listings.index');
     }
@@ -69,7 +81,17 @@ class ListingController extends Controller
     public function edit(Listing $listing)
     {
         $this->authorize('update', $listing);
-        return view('listings.edit', compact('listing'));
+        $listing->load('categories');
+        $listing->load('colors');
+        $listing->load('sizes');
+
+        $media = $listing->getMedia('listings');
+
+        $categories =  Category::all();
+        $colors =  Color::all();
+        $sizes =  Size::all();
+
+        return view('listings.edit', compact('listing', 'media', 'categories', 'colors', 'sizes'));
     }
 
     /**
@@ -84,6 +106,17 @@ class ListingController extends Controller
         $this->authorize('update', $listing);
 
         $listing->update($request->validated());
+
+        for($i=1; $i<=3; $i++){
+            if($request->hasFile('photo'. $i)){
+                $listing->addMediaFromRequest('photo'.$i)->toMediaCollection('listings');
+            }
+        }
+
+        $listing->categories()->sync($request->categories);
+        $listing->colors()->sync($request->colors);
+        $listing->sizes()->sync($request->sizes);
+
         return redirect()->route('listings.index');
     }
 
@@ -100,5 +133,13 @@ class ListingController extends Controller
         $listing->delete();
 
         return redirect()->route('listings.index');
+    }
+
+    public function deletePhoto($listingsId, $photoId)
+    {
+        $listing = Listing::where('user_id', auth()->id())->findOrFail($listingsId);
+        $photo = $listing->getMedia('listings')->where('id', $photoId)->first();
+        $photo?->delete();
+        return redirect()->route('listings.edit', $listingsId);
     }
 }

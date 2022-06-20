@@ -26,6 +26,9 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             return view('dashboard');
         })->name('dashboard');
 
+        Route::get('listings/{listingId}/photos/{photoId}/delete', [
+            \App\Http\Controllers\ListingController::class, 'deletePhoto'
+        ])->name('listing.delete-photo');
         Route::resource('listings', \App\Http\Controllers\ListingController::class);
     });
 

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('LIstings') }}
+            {{ __('Listings') }}
         </h2>
     </x-slot>
 
@@ -34,6 +34,9 @@
                                             Description
                                         </th>
                                         <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
+                                            Categories
+                                        </th>
+                                        <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
                                             Price
                                         </th>
                                         <th scope="col" class="text-sm  text-gray-900 px-6 py-4 text-left">
@@ -53,6 +56,13 @@
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {{Str::words($listing->description, 5)}}
+                                            </td>
+                                            <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                                <ul>
+                                                @foreach($listing?->categories as $category)
+                                                    <li>{{$category->name}}</li>
+                                                @endforeach
+                                                </ul>
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 ${{$listing->price}}

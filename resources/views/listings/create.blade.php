@@ -48,6 +48,39 @@
                             <x-jet-input id="photo3" class="block mt-1 w-full" type="file" name="photo3"   />
                         </div>
 
+                        <div class="mt-4">
+                            <x-jet-label for="categories" value="{{ __('Categories') }}" />
+                            <div class="flex flex-row gap-x-4">
+                                @foreach($categories as $category)
+                                    <label for="checkbox_{{$category->id}}_categories">
+                                        <input type="checkbox" id="checkbox_{{$category->id}}_categories" value="{{ $category->id }}" name="categories[]"> {{$category->name}}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <x-jet-label for="categories" value="{{ __('Colors') }}" />
+                            <div class="flex flex-row gap-x-4">
+                                @foreach($colors as $color)
+                                    <label for="checkbox_{{$color->id}}_colors">
+                                        <input type="checkbox" id="checkbox_{{$color->id}}_colors" value="{{ $color->id }}" name="colors[]"> {{$color->name}}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <x-jet-label for="categories" value="{{ __('Sizes') }}" />
+                            <div class="flex flex-row gap-x-4">
+                                @foreach($sizes as $size)
+                                    <label for="checkbox_{{$size->id}}_sizes">
+                                        <input type="checkbox" id="checkbox_{{$size->id}}_sizes" value="{{ $size->id }}" name="sizes[]"> {{$size->name}}
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="flex items-center mt-4">
                             <x-jet-button >
                                 {{ __('Create') }}
