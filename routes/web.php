@@ -30,12 +30,17 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
             \App\Http\Controllers\ListingController::class, 'deletePhoto'
         ])->name('listing.delete-photo');
         Route::resource('listings', \App\Http\Controllers\ListingController::class);
+
+
+        Route::resource('messages', \App\Http\Controllers\MessageController::class)
+        ->only('create', 'store');
+
+
     });
 
     Route::get('register-step2',[\App\Http\Controllers\RegisterStepTwoController::class, 'create'])
     ->name('register-step-two.create');
     Route::post('register-step2',[\App\Http\Controllers\RegisterStepTwoController::class, 'store'])
     ->name('register-step-two.store');
-
 
 });

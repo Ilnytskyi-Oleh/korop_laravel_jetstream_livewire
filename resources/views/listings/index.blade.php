@@ -20,9 +20,14 @@
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+
                             <div class="overflow-hidden">
                                 <div class="my-5 px-6 py-4">
-
+                                    @if(session('message'))
+                                        <div class="mb-6 py-4 bg-green-100 text-center font-semibold rounded rounded-md border-2 border-green-200">
+                                            {{ session('message') }}
+                                        </div>
+                                    @endif
                                     <form action="" method="GET">
                                         <input type="text" name="title" placeholder="Title" value="{{ request('title') ?? '' }}"/>
                                         <select name="category" id="">
@@ -109,6 +114,9 @@
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {{$listing->title}}
+                                                <div>
+                                                    <a href="{{ route('messages.create') }}?listing_id={{$listing->id}}" class="underline">Send a message</a>
+                                                </div>
                                             </td>
                                             <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                                 {{Str::words($listing->description, 5)}}
